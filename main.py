@@ -9,6 +9,7 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'json'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
+app.config['DEBUG'] = False
 
 
 def allowed_file(filename):
@@ -57,4 +58,4 @@ def upload_file():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8888)
+    app.run(port=8888, host='0.0.0.0')
