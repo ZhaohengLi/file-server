@@ -12,10 +12,6 @@ app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 app.config['DEBUG'] = False
 
 user = 0
-task_set = {
-    'center_gesture_right': 1,
-    'center_gesture_left': 2
-}
 task = 0
 
 
@@ -88,8 +84,11 @@ def upload_file():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return 'Succeed'
+            if filename == str(user)+"-"+str(task)+".json":
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                return 'Succeed'
+            else:
+                return 'Failed\n'+get_status()
 
     return '''
         <!doctype html>
