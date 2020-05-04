@@ -43,7 +43,7 @@ def get_task():
 
 
 @app.route('/get_bar')
-def get_task():
+def get_bar():
     global bar
     return str(bar)
 
