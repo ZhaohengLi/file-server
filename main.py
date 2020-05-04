@@ -47,7 +47,7 @@ def get_task():
     return str(task)
 
 
-@app.route('./get_status')
+@app.route('/get_status')
 def get_status():
     global user, task
     return '当前用户为 '+str(user)+' 任务为 '+str(task)
