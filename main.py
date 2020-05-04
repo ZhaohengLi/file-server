@@ -11,6 +11,13 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 app.config['DEBUG'] = False
 
+user = 0
+task_set = {
+    'center_gesture_right': 1,
+    'center_gesture_left': 2
+}
+task = 0
+
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -25,7 +32,41 @@ def uploaded_file(filename):
 
 @app.route('/')
 def hello_world():
-    return 'This is the gesture collect server.'
+    return 'Gesture Collect Server'
+
+
+@app.route('/get_user')
+def get_user():
+    global user
+    return user
+
+
+@app.route('/get_task')
+def get_task():
+    global task
+    return task
+
+
+@app.route('/set_user', methods=['GET'])
+def set_user():
+    global user
+    try:
+        user = int(request.args.get('user'))
+        return 'Succeed'
+    except Exception as e:
+        return 'Failed\n'+str(e)
+
+
+@app.route('/set_task', methods=['GET'])
+def set_task():
+    global task
+    try:
+        got = request.args.get('task')
+        if got in task_set:
+            task = task_set.get(got)
+        return 'Succeed'
+    except Exception as e:
+        return 'Failed\n' + str(e)
 
 
 @app.route('/upload', methods=['POST', 'GET'])
