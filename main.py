@@ -64,7 +64,9 @@ def set_task():
         got = request.args.get('task')
         if got in task_set:
             task = task_set.get(got)
-        return 'Succeed'
+            return 'Succeed'
+        else:
+            return 'Failed'
     except Exception as e:
         return 'Failed\n' + str(e)
 
@@ -85,7 +87,7 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return 'Finished.'
+            return 'Succeed'
 
     return '''
         <!doctype html>
