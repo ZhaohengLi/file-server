@@ -13,17 +13,16 @@ app.config['DEBUG'] = False
 
 user = 0
 task = 0
+bar = 50
 
 
 def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
 @app.route('/')
@@ -43,10 +42,16 @@ def get_task():
     return str(task)
 
 
+@app.route('/get_bar')
+def get_task():
+    global bar
+    return str(bar)
+
+
 @app.route('/get_status')
 def get_status():
     global user, task
-    return '当前用户为 '+str(user)+' 任务为 '+str(task)
+    return '当前用户为 '+str(user)+' 任务为 '+str(task)+' 要求次数为 '+str(bar)
 
 
 @app.route('/set_user', methods=['GET'])
@@ -64,6 +69,16 @@ def set_task():
     global task
     try:
         task = int(request.args.get('task'))
+        return 'Succeed'
+    except Exception as e:
+        return 'Failed\n' + str(e)
+
+
+@app.route('/set_bar', methods=['GET'])
+def set_task():
+    global bar
+    try:
+        bar = int(request.args.get('bar'))
         return 'Succeed'
     except Exception as e:
         return 'Failed\n' + str(e)
