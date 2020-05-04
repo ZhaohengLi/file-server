@@ -38,13 +38,13 @@ def hello_world():
 @app.route('/get_user')
 def get_user():
     global user
-    return user
+    return str(user)
 
 
 @app.route('/get_task')
 def get_task():
     global task
-    return task
+    return str(task)
 
 
 @app.route('/set_user', methods=['GET'])
