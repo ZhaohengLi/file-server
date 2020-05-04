@@ -47,6 +47,12 @@ def get_task():
     return str(task)
 
 
+@app.route('./get_status')
+def get_status():
+    global user, task
+    return '当前用户为 '+str(user)+' 任务为 '+str(task)
+
+
 @app.route('/set_user', methods=['GET'])
 def set_user():
     global user
@@ -61,12 +67,8 @@ def set_user():
 def set_task():
     global task
     try:
-        got = request.args.get('task')
-        if got in task_set:
-            task = task_set.get(got)
-            return 'Succeed'
-        else:
-            return 'Failed'
+        task = int(request.args.get('task'))
+        return 'Succeed'
     except Exception as e:
         return 'Failed\n' + str(e)
 
