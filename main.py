@@ -75,7 +75,7 @@ def set_task():
 
 
 @app.route('/set_bar', methods=['GET'])
-def set_task():
+def set_bar():
     global bar
     try:
         bar = int(request.args.get('bar'))
