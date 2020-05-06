@@ -100,6 +100,8 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             if filename == str(user)+"-"+str(task)+".json":
+                if os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], filename)):
+                    os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 return 'Succeed'
             else:
